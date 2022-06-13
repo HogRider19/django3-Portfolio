@@ -6,7 +6,7 @@ def all_blog(request):
 
     page_number = int(request.GET.get('page', 1))
 
-    all_posts = Post.objects.order_by('date')
+    all_posts = Post.objects.order_by('-date')
     post_count = len(all_posts)
     count_all_group = round(post_count/3)
 
