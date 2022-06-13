@@ -1,64 +1,63 @@
-{% extends 'portfolio/base.html' %}
-
-{% block content%}
+{% extends "portfolio/base.html" %}
 
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .center {
-            text-align: center;
-        }
-        
-        .pagination {
-            display: inline-block;
-        }
-        
-        .pagination a {
-            color: black;
-            float: left;
-            padding: 8px 16px;
-            text-decoration: none;
-            transition: background-color .3s;
-            border: 1px solid #ddd;
-            margin: 0 4px;
-        }
-        
-        .pagination a.active {
-            background-color: #4CAF50;
-            color: white;
-            border: 1px solid #4CAF50;
-        }
-        
-        .pagination a:hover:not(.active) {background-color: #ddd;}
-        </style>
-</head>
-<body>
-    <h1>Blog</h1>
-    <h2>There are {{ info_page.count_posts }} posts in total</h2>
+{% block content %}
 
-    <br>
-     {% for post in posts %}
-        <a href="{% url 'blog:detail' post.id %}"><h2>{{post.title}}</h2></a>
-        <h5>{{post.date}}</h5>
-        <p>{{post.description|truncatechars:100}}</p>
-    {% endfor %}
+<style>
+    .center {
+        text-align: center;
+    }
+    
+    .pagination {
+        display: inline-block;
+    }
+    
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        transition: background-color .3s;
+        border: 1px solid #ddd;
+        margin: 0 4px;
+    }
+    
+    .pagination a.active {
+        background-color: #4CAF50;
+        color: white;
+        border: 1px solid #4CAF50;
+    }
+    
+    .pagination a:hover:not(.active) {background-color: #ddd;}
+    </style>
 
-    <div class="center">
-        <div class="pagination">
-            <h2>Page {{info_page.page_number}}</h2>
-            <a href="?page={{info_page.previous}}">«</a>
-            <a href="?page={{info_page.next}}">»</a>
-        </div>
-      </div>
+<h1 id="blogtitle" class="font-weight-bold text-center">Блог</h1>
 
-</body>
-</html>
+<h3 class="text-center mb-5">Всего написано {{ info_page.count_posts }} постов</h3>
 
-{% endblock%}
+{% for blog in posts %}
+<div class="row justify-content-center my-3">
+  <div class="col-md-10">
+    <a href="{% url 'blog:detail' blog.id %}">
+      <h2>{{ blog.title }}</h2>
+    </a>
+    <h5 class="text-muted">{{ blog.date|date:'M d Y'|upper }}</h5>
+    <h4>{{ blog.description|striptags|truncatechars:100 }}</h4>
+  </div>
+</div>
+{% endfor %}
+
+
+<div class="center">
+    <div class="pagination">
+        <h2>Страница № {{info_page.page_number}}</h2>
+        <a href="?page={{info_page.previous}}">««««««««</a>
+        <a href="?page={{info_page.next}}">»»»»»»»»</a>
+    </div>
+  </div>
+
+
+{% endblock %}
+
+
